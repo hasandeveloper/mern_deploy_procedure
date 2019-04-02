@@ -1,0 +1,18 @@
+sudo apt-get update && sudo apt-get upgrade -y
+
+sudo apt-get update
+
+sudo apt-get install build-essential libssl-dev
+
+cd ~
+# Change 0.33.5 <---- You see this the version may have changed check the nvm page
+curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.5/install.sh -o install_nvm.sh
+bash install_nvm.sh
+source ~/.profile
+nvm install 6.0.0
+nvm use 6.0.0
+node -v
+# Outputs a number: "v6.0.0"
+npm -v
+# outputs a number "3.8.6"
+

@@ -1,0 +1,46 @@
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+    
+    ====Read note====
+----Create the list file /etc/apt/sources.list.d/mongodb-org-4.0.list for your version of Ubuntu.----
+   ====Read note end====
+
+sudo touch /etc/apt/sources.list.d/mongodb-org-4.0.list
+
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org=4.0.8 mongodb-org-server=4.0.8 mongodb-org-shell=4.0.8 mongodb-org-mongos=4.0.8 mongodb-org-tools=4.0.8
+
+echo "mongodb-org hold" | sudo dpkg --set-selections
+echo "mongodb-org-server hold" | sudo dpkg --set-selections
+echo "mongodb-org-shell hold" | sudo dpkg --set-selections
+echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+sudo service mongod start
+
+Verify that MongoDB has started successfully
+
+    ====Read note====
+----tail -f /var/log/mongodb/mongod.log----
+    ====Read note end====
+
+
+        ====Read note====
+
+Verify that MongoDB has started successfully
+Verify that the mongod process has started successfully by checking the contents of the log file at /var/log/mongodb/mongod.log for a line reading
+
+[initandlisten] waiting for connections on port 27017
+27017 is the default port the standalone mongod listens on.
+
+You may see non-critical warnings in the mongod output. As long as you see the log line shown above, you can safely ignore these warnings during your initial evaluation of MongoDB.
+
+
+    ====Read note end====
+
+
+    ====FYI====
+    https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+    ====FYI END===

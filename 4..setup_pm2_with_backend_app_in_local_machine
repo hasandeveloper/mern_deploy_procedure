@@ -1,0 +1,42 @@
+1)Install pm2 in local machine
+   npm install pm2 -g
+   pm2 update
+2)change port to 3001 in bootable  file of backend app
+3)create file in ecosystem.json
+   Ex:-
+{
+  "apps": [
+    {
+      "name": "kloc_help_desk_backend",
+      "script": "index.js",
+      "instances": 1,
+      "exec_mode": "cluster_mode",
+      "env": {
+        "PORT": 3001
+      },
+      "env_production": {
+        "NODE_ENV": "production",
+        "PORT": 3001
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "key": "~/Downloads/feb142019.pem",
+      "user": "ubuntu",
+      "host": ["13.234.34.58"],
+      "ref": "origin/master",
+      "repo": "git@bitbucket.org:klocapps2/kloc_help_desk_backend.git",
+      "path": "/home/ubuntu/kloc_help_desk_backend",
+      "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
+4)Run command for setup in server
+  sudo pm2 deploy ecosystem.json production setup
+5)Run command for production deploy
+  sudo pm2 deploy ecosystem.json production
+6)Open port in security group
+  3001
+7)open url using for backend
+   http://URL:3001

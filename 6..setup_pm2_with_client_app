@@ -1,0 +1,42 @@
+1)create file in ecosystem.json
+   Ex-
+   {
+    "apps" : [{
+        "name" : "kloc_help_desk_front_client"
+     }],
+    "deploy": {
+      "production": {
+        "key": "~/Downloads/feb142019.pem",
+        "user": "ubuntu",
+        "host": ["13.234.34.58"],
+        "ref": "origin/master",
+        "repo": "git@bitbucket.org:klocapps2/kloc_help_desk_frontend.git",
+        "path": "/home/ubuntu/kloc_help_desk_front_client",
+        "post-deploy": "npm install && pm2 start npm -- start"
+      }
+    }
+  }
+2)Run command for setup in server
+  sudo pm2 deploy ecosystem.json production setup
+3)Run command for production deploy
+  sudo pm2 deploy ecosystem.json production
+4)if it struct in "production deploy" go inside client app in machine under current folder run 
+  pm2 start npm -- start
+5)Run command for production deploy
+  sudo pm2 deploy ecosystem.json production
+6) point your proxy to 3000 port
+  Ex-
+  server {
+    listen 80;
+    server_name your_domain.com www.your_domain.com;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_redirect off;
+     }
+}
+7)restart nginx

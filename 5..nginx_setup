@@ -1,0 +1,34 @@
+Nginx Setup
+We are going to start with the Nginx. You will need to run:
+
+=====sudo apt-get install nginx -y
+Once that is complete, you can check the status of your Nginx with:
+
+=====sudo systemctl status nginx
+
+Just press Crtl + C to close this. You may need to start Nginx with:
+
+=====sudo systemctl start nginx
+Then run this so Nginx starts on startup:
+
+=====sudo systemctl enable nginx
+
+=====sudo rm /etc/nginx/sites-available/default
+
+=====sudo nano /etc/nginx/sites-available/default
+Paste the following and replace your_domain.comwith your own domain.
+
+server {
+    listen 80;
+    server_name your_domain.com www.your_domain.com;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_redirect off;
+     }
+}
+=====sudo systemctl reload nginx
