@@ -40,3 +40,16 @@
   3001
 7)open url using for backend
    http://URL:3001
+   
+   
+   
+   Issue Faced and Resolve technics
+   
+Btw... the easiest way to resolve this is to open your .bashrc and comment out these lines:
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+Pm2 is not using interactive ssh.
